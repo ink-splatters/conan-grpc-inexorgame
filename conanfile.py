@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 from conans.errors import ConanInvalidConfiguration
-from conans.tools import Version
 import os
 
 
@@ -17,6 +16,7 @@ class grpcConan(ConanFile):
 
     settings = "os", "arch", "compiler", "build_type"
     # TODO: Add shared option
+
     options = {
         "fPIC": [True, False],
         "build_codegen": [True, False],
@@ -81,7 +81,6 @@ class grpcConan(ConanFile):
         #
         # cmake.definitions["CONAN_ENABLE_MOBILE"] = "ON" if self.options.build_csharp_ext else "OFF"
 
-
         cmake.definitions["gRPC_BUILD_CODEGEN"] = "ON" if self.options.build_codegen else "OFF"
         cmake.definitions["gRPC_BUILD_CSHARP_EXT"] = "ON" if self.options.build_csharp_ext else "OFF"
         cmake.definitions["gRPC_BUILD_TESTS"] = "OFF"
@@ -128,7 +127,7 @@ class grpcConan(ConanFile):
         # tools.rmdir(os.path.join(self.package_folder, "lib", "cmake"))
         # tools.rmdir(os.path.join(self.package_folder, "lib", "pkgconfig"))
         tools.rmdir(os.path.join(self.package_folder, "share"))
-    
+
     def package_info(self):
         bindir = os.path.join(self.package_folder, "bin")
         self.output.info("Appending PATH environment variable: {}".format(bindir))
